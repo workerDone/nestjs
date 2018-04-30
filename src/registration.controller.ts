@@ -1,10 +1,10 @@
 import { Get, Controller, Post, Body, HttpException, HttpStatus } from '@nestjs/common';
-import { UserRegistration } from './components/registration';
+import { UserRegistration } from './components/registration'
 import { create } from 'domain';
 import { User } from './interfice/user';
 
-@Controller()
-export class AppController {
+@Controller('help')
+export class RegistrationController {
   constructor(
     private userRegistration: UserRegistration,
   ){}
