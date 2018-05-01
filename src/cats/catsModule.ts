@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Module, OnModuleInit } from '@nestjs/common';
 import { CatsController } from './cats.controller';
 
 import { MongooseModule } from '@nestjs/mongoose';
@@ -9,4 +9,8 @@ import { UserSchema } from '../mongooseSchema/user';
     controllers: [CatsController],
     components: [],
 })
-export class CatsModule {}
+export class CatsModule implements OnModuleInit {
+    onModuleInit() {
+       console.log('hello');
+      }
+}
