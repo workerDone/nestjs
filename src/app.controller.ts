@@ -18,6 +18,7 @@ export class AppController {
   async getUsers(): Promise<User[]> {
     return this.userRegistration.findAllUser();
   }
+
   @Get('join')
   join(): string {
     throw new HttpException('Forbidden', HttpStatus.ACCEPTED);
