@@ -3,9 +3,14 @@ import { UserRegistration } from './components/registration';
 import { create } from 'domain';
 import { User } from './interfice/user';
 
+import { InjectModel } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
+import { UserSchema } from './mongooseSchema/user';
+
 @Controller()
 export class AppController {
   constructor(
+    @InjectModel(UserSchema) private catModel: Model<User>,
     private userRegistration: UserRegistration,
   ){}
 
@@ -22,5 +27,9 @@ export class AppController {
   @Get('join')
   join(): string {
     throw new HttpException('Forbidden', HttpStatus.ACCEPTED);
+  }
+  @Get('find')
+  async find(): Promise<User[]> {
+    return await this.catModel.find().exec();
   }
 }
