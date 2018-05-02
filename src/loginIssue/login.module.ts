@@ -1,5 +1,5 @@
 import { Module, OnModuleInit } from '@nestjs/common';
-import { Registration } from './registration.controller';
+import { Registration } from './controlers/registration.controller';
 
 import { MongooseModule } from '@nestjs/mongoose';
 import { UserSchema } from '../mongooseSchema/user';
@@ -10,7 +10,5 @@ import { UserSchema } from '../mongooseSchema/user';
     components: [],
 })
 export class Login implements OnModuleInit {
-    onModuleInit() {
-       console.log('hello');
-      }
+    onModuleInit() {}
 }

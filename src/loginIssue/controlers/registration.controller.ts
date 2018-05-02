@@ -1,12 +1,12 @@
 
 import { Get, Controller, Post, Body, HttpException, HttpStatus } from '@nestjs/common';
-import { UserRegistration } from '../components/registration';
+import { UserRegistration } from '../../components/registration';
 import { create } from 'domain';
-import { User } from '../interfice/user';
+import { User } from '../../interfice/user';
 
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { UserSchema } from '../mongooseSchema/user';
+import { UserSchema } from '../../mongooseSchema/user';
 
 @Controller('registration')
 export class Registration {
@@ -30,6 +30,7 @@ export class Registration {
       return new HttpException('Catch error registration', HttpStatus.CONFLICT);
     });
   }
+
   @Get()
     async getUsers(): Promise<User[]> {
         return await this.catModel.find().exec()
