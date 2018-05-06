@@ -11,7 +11,7 @@ import * as Joi from 'joi';
 
 @Controller('registration')
 
-export class Registration {
+export class RegistrationController {
   schema = Joi.object().keys({
     firstName: Joi.string().alphanum().min(3).max(30).required(),
     lastName: Joi.string().alphanum().min(3).max(30).required(),
@@ -20,7 +20,7 @@ export class Registration {
   });
 
   constructor(
-    @InjectModel(RegistrationSchema) private catModel: Model<UserRegistrtion>,
+    @InjectModel(RegistrationSchema) private UserRegisterModel: Model<UserRegistrtion>,
   ) { }
 
   @Post()
@@ -32,10 +32,10 @@ export class Registration {
       }
     });
 
-    return await this.catModel.find({ email: user.email }).exec()
+    return await this.UserRegisterModel.find({ email: user.email }).exec()
       .then(data => {
         if (!data.length) {
-          const createdCat = new this.catModel(user);
+          const createdCat = new this.UserRegisterModel(user);
           createdCat.save();
           return HttpStatus.CREATED;
         } else {
@@ -49,7 +49,7 @@ export class Registration {
 
   @Get()
   async getUsers(): Promise<UserRegistrtion[]> {
-    return await this.catModel.find().exec()
+    return await this.UserRegisterModel.find().exec()
       .catch(data => {
         return new HttpException("DB doesn't work", HttpStatus.CONFLICT);
       });

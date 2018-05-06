@@ -9,4 +9,5 @@ export class UserRegistrtion {
     password: string;
     @ApiModelProperty({type: String, required: true})
     email: string;
+    token: string;
 }

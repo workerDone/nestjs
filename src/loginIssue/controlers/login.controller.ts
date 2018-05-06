@@ -9,21 +9,19 @@ import { Model } from 'mongoose';
 import { RegistrationSchema } from '../../mongooseSchema/registrtion';
 
 @Controller('login')
-export class Login {
+export class LoginController {
   constructor(
     @InjectModel(RegistrationSchema) private catModel: Model<UserRegistrtion>,
   ){}
 
   @Post()
   async addUsers(@Body() user: UserRegistrtion): Promise<any> {
-   return await this.catModel.find({email: user.email}).exec()
+   return await this.catModel.find({email: user.email, password: user.password }).exec()
     .then( data => {
       if ( !data.length ) {
-        const createdCat = new this.catModel(user);
-        createdCat.save();
-        return HttpStatus.CREATED;
+        return new HttpException('User not found', HttpStatus.FORBIDDEN);
       } else {
-        return new HttpException('User already exists', HttpStatus.FORBIDDEN);
+        return  HttpStatus.ACCEPTED;
       }
     })
     .catch( data => {
