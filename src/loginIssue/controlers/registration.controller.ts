@@ -1,41 +1,57 @@
 
-import { Get, Controller, Post, Body, HttpException, HttpStatus } from '@nestjs/common';
-import { UserRegistration } from '../../components/registration';
+import { Get, Controller, Post, Body, HttpException, HttpStatus, Response } from '@nestjs/common';
+
 import { create } from 'domain';
-import { User } from '../../interfice/user';
+import { UserRegistrtion } from '../../interfice/user';
 
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { UserSchema } from '../../mongooseSchema/user';
+import { RegistrationSchema } from '../../mongooseSchema/registrtion';
+import * as Joi from 'joi';
 
 @Controller('registration')
+
 export class Registration {
+  schema = Joi.object().keys({
+    firstName: Joi.string().alphanum().min(3).max(30).required(),
+    lastName: Joi.string().alphanum().min(3).max(30).required(),
+    password: Joi.string().regex(/^[a-zA-Z0-9]{3,30}$/),
+    email: Joi.string().email(),
+  });
+
   constructor(
-    @InjectModel(UserSchema) private catModel: Model<User>,
-  ){}
+    @InjectModel(RegistrationSchema) private catModel: Model<UserRegistrtion>,
+  ) { }
 
   @Post()
-  async addUsers(@Body() user: User): Promise<any> {
-   return await this.catModel.find({email: user.email}).exec()
-    .then( data => {
-      if ( !data.length ) {
-        const createdCat = new this.catModel(user);
-        createdCat.save();
-        return HttpStatus.CREATED;
-      } else {
-        return new HttpException('User already exists', HttpStatus.FORBIDDEN);
+  async addUsers(@Body() user: UserRegistrtion): Promise<any> {
+
+    await Joi.validate(user, this.schema, (err, value) => {
+      if (err) {
+        return new HttpException('User error ', HttpStatus.BAD_REQUEST);
       }
-    })
-    .catch( data => {
-      return new HttpException('Catch error registration', HttpStatus.CONFLICT);
     });
+
+    return await this.catModel.find({ email: user.email }).exec()
+      .then(data => {
+        if (!data.length) {
+          const createdCat = new this.catModel(user);
+          createdCat.save();
+          return HttpStatus.CREATED;
+        } else {
+          return new HttpException('User already exists', HttpStatus.FORBIDDEN);
+        }
+      })
+      .catch(data => {
+        return new HttpException('Catch error registration', HttpStatus.CONFLICT);
+      });
   }
 
   @Get()
-    async getUsers(): Promise<User[]> {
-        return await this.catModel.find().exec()
-        .catch( data => {
-          return new HttpException("DB doesn't work", HttpStatus.CONFLICT);
-        });
-    }
+  async getUsers(): Promise<UserRegistrtion[]> {
+    return await this.catModel.find().exec()
+      .catch(data => {
+        return new HttpException("DB doesn't work", HttpStatus.CONFLICT);
+      });
+  }
 }

@@ -5,12 +5,12 @@ import { User } from './interfice/user';
 
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { UserSchema } from './mongooseSchema/user';
+import { RegistrationSchema } from './mongooseSchema/registrtion';
 
 @Controller()
 export class AppController {
   constructor(
-    @InjectModel(UserSchema) private catModel: Model<User>,
+    @InjectModel(RegistrationSchema) private catModel: Model<User>,
     private userRegistration: UserRegistration,
   ){}
 

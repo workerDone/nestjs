@@ -1,6 +1,6 @@
 import { ApiModelProperty } from '@nestjs/swagger';
 
-export class User {
+export class UserRegistrtion {
     @ApiModelProperty({type: String, required: true})
     firstName: string;
     @ApiModelProperty({type: String, required: true})
