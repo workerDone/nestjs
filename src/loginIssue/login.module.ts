@@ -7,7 +7,6 @@ import { LoginController } from './controlers/login.controller';
 @Module({
     imports: [
         MongooseModule.forFeature([{ name: 'User', schema: RegistrationSchema }]),
- 
     ],
     controllers: [
         RegistrationController,
@@ -15,6 +14,4 @@ import { LoginController } from './controlers/login.controller';
     ],
     components: [],
 })
-export class Login implements OnModuleInit {
-    onModuleInit() {}
-}
+export class Login {}

@@ -12,7 +12,6 @@ const mongoose_1 = require("@nestjs/mongoose");
 const registrtion_1 = require("./../mongooseSchema/registrtion");
 const login_controller_1 = require("./controlers/login.controller");
 let Login = class Login {
-    onModuleInit() { }
 };
 Login = __decorate([
     common_1.Module({
