@@ -11,7 +11,6 @@ const app_controller_1 = require("./app.controller");
 const registration_1 = require("./components/registration");
 const mongoose_1 = require("@nestjs/mongoose");
 const registrtion_1 = require("./mongooseSchema/registrtion");
-const login_module_1 = require("./loginIssue/login.module");
 let AppModule = class AppModule {
 };
 AppModule = __decorate([
@@ -19,7 +18,6 @@ AppModule = __decorate([
         imports: [
             mongoose_1.MongooseModule.forRoot('mongodb://Ivan:Ivan@cluster0-shard-00-00-n5kxm.mongodb.net:27017,cluster0-shard-00-01-n5kxm.mongodb.net:27017,cluster0-shard-00-02-n5kxm.mongodb.net:27017/MyMonDb?ssl=true&replicaSet=Cluster0-shard-0&authSource=admin'),
             mongoose_1.MongooseModule.forFeature([{ name: 'Man', schema: registrtion_1.RegistrationSchema }]),
-            login_module_1.Login,
         ],
         controllers: [
             app_controller_1.AppController,

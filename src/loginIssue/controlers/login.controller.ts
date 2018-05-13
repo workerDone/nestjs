@@ -11,12 +11,12 @@ import { RegistrationSchema } from '../../mongooseSchema/registrtion';
 @Controller('login')
 export class LoginController {
   constructor(
-    @InjectModel(RegistrationSchema) private catModel: Model<UserRegistrtion>,
+    @InjectModel(RegistrationSchema) private UserRegisterModel: Model<UserRegistrtion>,
   ){}
 
   @Post()
   async addUsers(@Body() user: UserRegistrtion): Promise<any> {
-   return await this.catModel.find({email: user.email, password: user.password }).exec()
+   return await this.UserRegisterModel.find({email: user.email, password: user.password }).exec()
     .then( data => {
       if ( !data.length ) {
         return new HttpException('User not found', HttpStatus.FORBIDDEN);
@@ -31,7 +31,7 @@ export class LoginController {
 
   @Get()
     async getUsers(): Promise<UserRegistrtion[]> {
-        return await this.catModel.find().exec()
+        return await this.UserRegisterModel.find().exec()
         .catch( data => {
           return new HttpException("DB doesn't work", HttpStatus.CONFLICT);
         });

@@ -38,11 +38,6 @@ let RegistrationController = class RegistrationController {
     }
     addUsers(user) {
         return __awaiter(this, void 0, void 0, function* () {
-            yield Joi.validate(user, this.schema, (err, value) => {
-                if (err) {
-                    return new common_1.HttpException('User error ', common_1.HttpStatus.BAD_REQUEST);
-                }
-            });
             return yield this.UserRegisterModel.find({ email: user.email }).exec()
                 .then(data => {
                 if (!data.length) {

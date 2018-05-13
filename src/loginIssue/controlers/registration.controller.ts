@@ -26,11 +26,11 @@ export class RegistrationController {
   @Post()
   async addUsers(@Body() user: UserRegistrtion): Promise<any> {
 
-    await Joi.validate(user, this.schema, (err, value) => {
-      if (err) {
-        return new HttpException('User error ', HttpStatus.BAD_REQUEST);
-      }
-    });
+    // await Joi.validate(user, this.schema, (err, value) => {
+    //   if (err) {
+    //     return new HttpException('User error ', HttpStatus.BAD_REQUEST);
+    //   }
+    // });
 
     return await this.UserRegisterModel.find({ email: user.email }).exec()
       .then(data => {

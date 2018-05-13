@@ -26,12 +26,12 @@ const mongoose_1 = require("@nestjs/mongoose");
 const mongoose_2 = require("mongoose");
 const registrtion_1 = require("../../mongooseSchema/registrtion");
 let LoginController = class LoginController {
-    constructor(catModel) {
-        this.catModel = catModel;
+    constructor(UserRegisterModel) {
+        this.UserRegisterModel = UserRegisterModel;
     }
     addUsers(user) {
         return __awaiter(this, void 0, void 0, function* () {
-            return yield this.catModel.find({ email: user.email, password: user.password }).exec()
+            return yield this.UserRegisterModel.find({ email: user.email, password: user.password }).exec()
                 .then(data => {
                 if (!data.length) {
                     return new common_1.HttpException('User not found', common_1.HttpStatus.FORBIDDEN);
@@ -47,7 +47,7 @@ let LoginController = class LoginController {
     }
     getUsers() {
         return __awaiter(this, void 0, void 0, function* () {
-            return yield this.catModel.find().exec()
+            return yield this.UserRegisterModel.find().exec()
                 .catch(data => {
                 return new common_1.HttpException("DB doesn't work", common_1.HttpStatus.CONFLICT);
             });
