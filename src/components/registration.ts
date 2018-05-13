@@ -1,16 +1,16 @@
 import { Component } from '@nestjs/common';
 
-import { User } from '../interfice/user';
+import { UserRegistrtion } from '../interfice/user';
 
 @Component()
  export class UserRegistration {
-    private user: User[] = [];
+    private user: UserRegistrtion[] = [];
 
-    setUser( user: User ): void {
+    setUser( user: UserRegistrtion ): void {
         this.user.push( user );
     }
 
-    findAllUser(): User[] {
+    findAllUser(): UserRegistrtion[] {
         return this.user;
     }
 }

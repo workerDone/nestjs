@@ -1,7 +1,7 @@
 import { Get, Controller, Post, Body, HttpException, HttpStatus } from '@nestjs/common';
 import { UserRegistration } from './components/registration';
 import { create } from 'domain';
-import { User } from './interfice/user';
+import { UserRegistrtion } from './interfice/user';
 
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
@@ -10,17 +10,17 @@ import { RegistrationSchema } from './mongooseSchema/registrtion';
 @Controller()
 export class AppController {
   constructor(
-    @InjectModel(RegistrationSchema) private catModel: Model<User>,
+    @InjectModel(RegistrationSchema) private catModel: Model<UserRegistrtion>,
     private userRegistration: UserRegistration,
   ){}
 
   @Post()
-  async create(@Body() user: User) {
+  async create(@Body() user: UserRegistrtion) {
     this.userRegistration.setUser(user);
   }
 
   @Get()
-  async getUsers(): Promise<User[]> {
+  async getUsers(): Promise<UserRegistrtion[]> {
     return this.userRegistration.findAllUser();
   }
 
@@ -29,7 +29,7 @@ export class AppController {
     throw new HttpException('Forbidden', HttpStatus.ACCEPTED);
   }
   @Get('find')
-  async find(): Promise<User[]> {
+  async find(): Promise<UserRegistrtion[]> {
     return await this.catModel.find().exec();
   }
 }
